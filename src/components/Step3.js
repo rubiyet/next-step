@@ -49,7 +49,7 @@ export default function Step3({ formData, setFormData, prevStep, setStep }) {
   return (
     <motion.form
       onSubmit={handleSubmit(onSubmit, () =>
-        toast.error("Please fill all required fields!")
+        toast.error("Please fill all required fields correctly!")
       )}
       className="space-y-4 p-6 bg-white shadow-lg rounded-lg max-w-md mx-auto dark:bg-gray-800 dark:text-white"
       initial={{ opacity: 0, scale: 0.95 }}
