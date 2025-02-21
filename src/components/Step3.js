@@ -57,71 +57,64 @@ export default function Step3({ formData, setFormData, prevStep, setStep }) {
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      {[
-        {
-          id: "username",
-          label: "Username",
-          error: errors.username,
-          required: true,
-        },
-        {
-          id: "password",
-          label: "Password",
-          error: errors.password,
-          required: true,
-        },
-        {
-          id: "confirmPassword",
-          label: "Confirm Password",
-          error: errors.confirmPassword,
-          required: true,
-        },
-      ].map(({ id, label, error }) => (
-        <div key={id}>
-          <Label
-            htmlFor={id}
-            className="text-sm font-medium text-gray-700 dark:text-white"
-          >
-            {label}
-          </Label>
-          <div className="relative">
-            <Input
-              type={
-                id.includes("password")
-                  ? (id === "password" && showPassword) ||
-                    (id === "confirmPassword" && showConfirmPassword)
-                    ? "text"
-                    : "password"
-                  : "text"
-              }
-              id={id}
-              {...register(id)}
-              className="w-full px-3 py-2 border rounded-lg focus:ring-2 dark:bg-gray-600 dark:text-white"
-            />
-            {id.includes("password") && (
-              <button
-                type="button"
-                className="absolute inset-y-0 right-3 flex items-center"
-                onClick={() =>
-                  id === "password"
-                    ? setShowPassword(!showPassword)
-                    : setShowConfirmPassword(!showConfirmPassword)
-                }
-              >
-                {(id === "password" && showPassword) ||
-                (id === "confirmPassword" && showConfirmPassword) ? (
-                  <AiOutlineEyeInvisible className="w-5 h-5 text-gray-500 dark:text-gray-300" />
-                ) : (
-                  <AiOutlineEye className="w-5 h-5 text-gray-500 dark:text-gray-300" />
-                )}
-              </button>
-            )}
-          </div>
-          {error && (
-            <p className="text-red-500 text-xs pt-1">{error.message}</p>
+{[
+  {
+    id: "username",
+    label: "Username",
+    error: errors.username,
+    required: true,
+    type: "text",
+  },
+  {
+    id: "password",
+    label: "Password",
+    error: errors.password,
+    required: true,
+    type: showPassword ? "text" : "password",
+    toggle: () => setShowPassword(!showPassword),
+    show: showPassword,
+  },
+  {
+    id: "confirmPassword",
+    label: "Confirm Password",
+    error: errors.confirmPassword,
+    required: true,
+    type: showConfirmPassword ? "text" : "password",
+    toggle: () => setShowConfirmPassword(!showConfirmPassword),
+    show: showConfirmPassword,
+  },
+].map(({ id, label, error, type, toggle, show }) => (
+  <div key={id}>
+    <Label
+      htmlFor={id}
+      className="text-sm font-medium text-gray-700 dark:text-white"
+    >
+      {label}
+    </Label>
+    <div className="relative">
+      <Input
+        type={type}
+        id={id}
+        {...register(id)}
+        className="w-full px-3 py-2 border rounded-lg focus:ring-2 dark:bg-gray-600 dark:text-white"
+      />
+      {toggle && (
+        <button
+          type="button"
+          className="absolute inset-y-0 right-3 flex items-center"
+          onClick={toggle}
+        >
+          {show ? (
+            <AiOutlineEyeInvisible className="w-5 h-5 text-gray-500 dark:text-gray-300" />
+          ) : (
+            <AiOutlineEye className="w-5 h-5 text-gray-500 dark:text-gray-300" />
           )}
-        </div>
-      ))}
+        </button>
+      )}
+    </div>
+    {error && <p className="text-red-500 text-xs pt-1">{error.message}</p>}
+  </div>
+))}
 
       <div className="flex justify-between mt-6">
         <Button
