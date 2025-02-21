@@ -27,7 +27,7 @@ export const metadata = {
     siteName: "Next Step ♾️",
     images: [
       {
-        url: "/rubiyet.jpeg",
+        url: "https://next-step-3.vercel.app/rubiyet.jpeg",
         width: 1200,
         height: 630,
         alt: "Next Step",
